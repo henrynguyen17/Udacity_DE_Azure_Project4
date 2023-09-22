@@ -1,0 +1,155 @@
+{
+	"name": "pipeline - transfer to synapse",
+	"properties": {
+		"activities": [
+			{
+				"name": "Data flow - transfer payroll to synapse",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "df_payroll",
+						"type": "DataFlowReference"
+					},
+					"staging": {
+						"linkedService": {
+							"referenceName": "ls_storageaccount",
+							"type": "LinkedServiceReference"
+						},
+						"folderPath": "adlsnycpayroll-hoangnx11-lastintial/dirstaging"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Data flow - title to synapse",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "Data flow - transfer payroll to synapse",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "df_title",
+						"type": "DataFlowReference"
+					},
+					"staging": {
+						"linkedService": {
+							"referenceName": "ls_storageaccount",
+							"type": "LinkedServiceReference"
+						},
+						"folderPath": "adlsnycpayroll-hoangnx11-lastintial/dirstaging"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Data flow - employee to synapse",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "Data flow - title to synapse",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "df_employee",
+						"type": "DataFlowReference"
+					},
+					"staging": {
+						"linkedService": {
+							"referenceName": "ls_storageaccount",
+							"type": "LinkedServiceReference"
+						},
+						"folderPath": "adlsnycpayroll-hoangnx11-lastintial/dirstaging"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Data flow - agency to synapse",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "Data flow - employee to synapse",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "df_agency",
+						"type": "DataFlowReference"
+					},
+					"staging": {
+						"linkedService": {
+							"referenceName": "ls_storageaccount",
+							"type": "LinkedServiceReference"
+						},
+						"folderPath": "adlsnycpayroll-hoangnx11-lastintial/dirstaging"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2023-09-22T09:40:52Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

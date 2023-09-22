@@ -1,0 +1,9 @@
+{
+	"name": "hoangnx11datafactory",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "106151e4-e949-42ea-8f0c-d3fd34d269c6",
+		"tenantId": "f01e930a-b52e-42b1-b70f-a8882b5d043b"
+	}
+}
