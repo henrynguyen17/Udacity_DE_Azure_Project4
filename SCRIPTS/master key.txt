@@ -1,0 +1,3 @@
+-- create master key to be able to execute aggregation pipeline :)
+
+CREATE MASTER KEY ENCRYPTION BY PASSWORD = '123@Udacity';
